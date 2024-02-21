@@ -26,5 +26,6 @@ public class StudentController {
     public ResponseEntity<List<Student>>  getAllStudent(){
         return new ResponseEntity<>(studentService.getAllStudent(),HttpStatus.OK);
     }
+    //yet to be implemented
 
 }
