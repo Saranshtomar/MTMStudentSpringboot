@@ -26,6 +26,9 @@ public class StudentController {
     public ResponseEntity<List<Student>>  getAllStudent(){
         return new ResponseEntity<>(studentService.getAllStudent(),HttpStatus.OK);
     }
-    //yet to be implemented
 
+    @PutMapping("/student/{studentId}/course/{courseId}")
+    public ResponseEntity<String> assignCourseToStudent(@PathVariable Long studentId, @PathVariable Long courseId){
+        return new ResponseEntity<>(studentService.assignCourseToStudent(studentId, courseId), HttpStatus.OK);
+    }
 }

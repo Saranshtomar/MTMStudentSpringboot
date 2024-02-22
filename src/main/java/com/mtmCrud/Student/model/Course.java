@@ -1,18 +1,15 @@
 package com.mtmCrud.Student.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "course")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Setter
+@Getter
 public class Course {
 
     @Id
@@ -26,7 +23,7 @@ public class Course {
     @Column(name = "duration")
     float duration;
 
-   @ManyToMany(fetch =FetchType.EAGER,cascade = CascadeType.ALL,mappedBy ="course")
-    Set<Student> student;
+    @ManyToMany(fetch =FetchType.EAGER,cascade = CascadeType.ALL,mappedBy ="course")
+    Set<Student> student = new HashSet<>();
 
 }
