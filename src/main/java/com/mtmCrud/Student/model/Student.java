@@ -9,8 +9,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "student")
-@Setter
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Student {
 
     @Id

@@ -1,5 +1,6 @@
 package com.mtmCrud.Student.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,8 +9,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "course")
-@Setter
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Course {
 
     @Id
@@ -24,6 +26,7 @@ public class Course {
     float duration;
 
     @ManyToMany(fetch =FetchType.EAGER,cascade = CascadeType.ALL,mappedBy ="course")
+    @JsonIgnore
     Set<Student> student = new HashSet<>();
 
 }
