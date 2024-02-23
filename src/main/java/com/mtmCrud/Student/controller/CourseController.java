@@ -16,29 +16,38 @@ public class CourseController {
     @Autowired
     CourseService courseService;
 
+    //Adding a course
     @PostMapping("/course")
-    public ResponseEntity<String> createCourse(@RequestBody Course course){
+    public ResponseEntity<String> createCourse(@RequestBody Course course) {
         return new ResponseEntity<>(courseService.createCourse(course), HttpStatus.CREATED);
     }
 
+    //Getting all the course
     @GetMapping
-    public ResponseEntity<List<Course>> getAllCourse(){
-        return new ResponseEntity<>(courseService.getAllCourse(),HttpStatus.OK);
+    public ResponseEntity<List<Course>> getAllCourse() {
+        return new ResponseEntity<>(courseService.getAllCourse(), HttpStatus.OK);
     }
 
+    //Getting course by id
     @GetMapping("/course/{courseId}")
-    public ResponseEntity<Course> getCourseById(@PathVariable Long courseId){
+    public ResponseEntity<Course> getCourseById(@PathVariable Long courseId) {
         Course course = courseService.getCourseById(courseId);
-        if(course == null){
+        if (course == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        else{
+        } else {
             return new ResponseEntity<>(course, HttpStatus.OK);
         }
     }
 
+    //Deleting course by id
     @DeleteMapping("/course/{courseId}")
-    public ResponseEntity<String> deleteStudentById(@PathVariable Long courseId){
+    public ResponseEntity<String> deleteStudentById(@PathVariable Long courseId) {
         return new ResponseEntity<>(courseService.deleteCourseById(courseId), HttpStatus.OK);
+    }
+
+    //Updating course by id
+    @PutMapping("/course/{courseId}")
+    public ResponseEntity<String> updateCourseById(@RequestBody Course course, @PathVariable long courseId) {
+        return new ResponseEntity<>(courseService.updateCourseById(course, courseId), HttpStatus.OK);
     }
 }

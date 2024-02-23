@@ -11,12 +11,15 @@ import java.util.Set;
 @Table(name = "student")
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    long id ;
+    long id;
     @Column(name = "name")
     String name;
 
@@ -24,9 +27,9 @@ public class Student {
     String dob;
 
     @Column(name = "city")
-    String city ;
+    String city;
 
-    @ManyToMany(fetch=FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "student_course")
     Set<Course> course = new HashSet<>();
 }

@@ -23,37 +23,34 @@ public class StudentService {
         try {
             studentRepository.save(student);
             return "student created successfully";
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
     public List<Student> getAllStudent() {
-        try{
+        try {
             return studentRepository.findAll();
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
     public String assignCourseToStudent(Long studentId, Long courseId) {
-        try{
+        try {
             Optional<Student> student = studentRepository.findById(studentId);
             Optional<Course> course = courseRepository.findById(courseId);
-            if(student.isPresent() && course.isPresent()){
+            if (student.isPresent() && course.isPresent()) {
                 Student existStudent = student.get();
                 Set<Course> courseSet = existStudent.getCourse();
                 courseSet.add(course.get());
                 existStudent.setCourse(courseSet);
                 studentRepository.save(existStudent);
                 return "Course assigned to Student successfully";
-            }
-            else{
+            } else {
                 return "Either Student or Course does not exist";
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -62,23 +59,44 @@ public class StudentService {
         try {
             Optional<Student> student = studentRepository.findById(studentId);
             return student.orElse(null);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
     public String deleteStudentById(Long studentId) {
-        try{
+        try {
             Optional<Student> student = studentRepository.findById(studentId);
-            if(student.isPresent()) {
+            if (student.isPresent()) {
                 studentRepository.deleteById(studentId);
                 return "Student deleted successfully";
-            }
-            else{
+            } else {
                 return "Student does not exist";
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public String updateStudentById(Student student, long studentId) {
+        Student studentExist = studentRepository.findById(studentId).
+                orElseThrow(() -> new RuntimeException("Student Not Found"));
+        studentExist.setName(student.getName());
+        studentExist.setDob(student.getDob());
+        studentExist.setCity(student.getCity());
+        studentRepository.save(studentExist);
+
+        return "student Updated Successfully";
+    }
+
+    public String removeCourseFromStudent(Long studentId, Long courseId) {
+        Optional<Student> studentExist = studentRepository.findById(studentId);
+        Optional<Course> courseExist = courseRepository.findById(courseId);
+        if (studentExist.isPresent() && courseExist.isPresent()) {
+            Set<Course> courseSet = studentExist.get().getCourse();
+            courseSet.remove(courseExist.get());
+            studentRepository.save(studentExist.get());
+            return "Course Remove from student: " + studentId;
+        } else return "Either Student or Course Does not Exist";
     }
 }

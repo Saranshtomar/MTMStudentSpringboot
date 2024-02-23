@@ -15,17 +15,17 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name ="id")
+    @Column(name = "id")
     long id;
 
     @Column(name = "name")
-    String name ;
+    String name;
 
     @Column(name = "duration")
     float duration;
 
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "course")
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy ="course")
     Set<Student> student = new HashSet<>();
 
 }

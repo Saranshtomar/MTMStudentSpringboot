@@ -16,27 +16,27 @@ public class CourseService {
     CourseRepository courseRepository;
 
     public String createCourse(Course course) {
-        try{
+        try {
             courseRepository.save(course);
             return "Course created successfully";
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    public Course getCourseById(Long courseId){
-        try{
+    public Course getCourseById(Long courseId) {
+        try {
             Optional<Course> course = courseRepository.findById(courseId);
             return course.orElse(null);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    public List<Course> getAllCourse(){
-        try{
+    public List<Course> getAllCourse() {
+        try {
             return courseRepository.findAll();
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -50,5 +50,16 @@ public class CourseService {
         course.getStudent().clear();
         courseRepository.delete(course);
         return "Course deleted successfully";
+    }
+
+    public String updateCourseById(Course course, long courseId) {
+        Course existingCourse = courseRepository.findById(courseId)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+        existingCourse.setName(course.getName());
+        existingCourse.setDuration(course.getDuration());
+        courseRepository.save(existingCourse);
+
+        return "Course Updated Successfully";
+
     }
 }
