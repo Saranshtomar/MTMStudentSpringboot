@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/courses")
@@ -38,4 +37,8 @@ public class CourseController {
         }
     }
 
+    @DeleteMapping("/course/{courseId}")
+    public ResponseEntity<String> deleteStudentById(@PathVariable Long courseId){
+        return new ResponseEntity<>(courseService.deleteCourseById(courseId), HttpStatus.OK);
+    }
 }

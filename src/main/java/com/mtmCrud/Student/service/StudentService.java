@@ -2,8 +2,8 @@ package com.mtmCrud.Student.service;
 
 import com.mtmCrud.Student.model.Course;
 import com.mtmCrud.Student.model.Student;
-import com.mtmCrud.Student.repository.CourseRepo;
-import com.mtmCrud.Student.repository.StudentRepo;
+import com.mtmCrud.Student.repository.CourseRepository;
+import com.mtmCrud.Student.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +14,14 @@ import java.util.Set;
 @Service
 public class StudentService {
     @Autowired
-    StudentRepo studentRepo;
+    StudentRepository studentRepository;
 
     @Autowired
-    CourseRepo courseRepo;
+    CourseRepository courseRepository;
 
     public String createStudent(Student student) {
         try {
-            studentRepo.save(student);
+            studentRepository.save(student);
             return "student created successfully";
         }catch (Exception e)
         {
@@ -31,7 +31,7 @@ public class StudentService {
 
     public List<Student> getAllStudent() {
         try{
-            return studentRepo.findAll();
+            return studentRepository.findAll();
         }catch (Exception e)
         {
             throw new RuntimeException(e.getMessage());
@@ -40,14 +40,14 @@ public class StudentService {
 
     public String assignCourseToStudent(Long studentId, Long courseId) {
         try{
-            Optional<Student> student = studentRepo.findById(studentId);
-            Optional<Course> course =courseRepo.findById(courseId);
+            Optional<Student> student = studentRepository.findById(studentId);
+            Optional<Course> course = courseRepository.findById(courseId);
             if(student.isPresent() && course.isPresent()){
                 Student existStudent = student.get();
                 Set<Course> courseSet = existStudent.getCourse();
                 courseSet.add(course.get());
                 existStudent.setCourse(courseSet);
-                studentRepo.save(existStudent);
+                studentRepository.save(existStudent);
                 return "Course assigned to Student successfully";
             }
             else{
@@ -60,8 +60,23 @@ public class StudentService {
 
     public Student getStudentById(Long studentId) {
         try {
-            Optional<Student> student = studentRepo.findById(studentId);
+            Optional<Student> student = studentRepository.findById(studentId);
             return student.orElse(null);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public String deleteStudentById(Long studentId) {
+        try{
+            Optional<Student> student = studentRepository.findById(studentId);
+            if(student.isPresent()) {
+                studentRepository.deleteById(studentId);
+                return "Student deleted successfully";
+            }
+            else{
+                return "Student does not exist";
+            }
         }catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }

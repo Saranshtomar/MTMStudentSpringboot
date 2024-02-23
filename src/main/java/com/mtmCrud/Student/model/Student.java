@@ -26,7 +26,7 @@ public class Student {
     @Column(name = "city")
     String city ;
 
-    @ManyToMany(fetch=FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name = "student_course")
     Set<Course> course = new HashSet<>();
 }

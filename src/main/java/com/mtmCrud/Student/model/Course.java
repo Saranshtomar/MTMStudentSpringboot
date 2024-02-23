@@ -25,7 +25,7 @@ public class Course {
     float duration;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy ="course")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy ="course")
     Set<Student> student = new HashSet<>();
 
 }

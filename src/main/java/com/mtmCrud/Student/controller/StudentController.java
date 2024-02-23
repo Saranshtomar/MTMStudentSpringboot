@@ -42,4 +42,9 @@ public class StudentController {
     public ResponseEntity<String> assignCourseToStudent(@PathVariable Long studentId, @PathVariable Long courseId){
         return new ResponseEntity<>(studentService.assignCourseToStudent(studentId, courseId), HttpStatus.OK);
     }
+
+    @DeleteMapping("/student/{studentId}")
+    public ResponseEntity<String> deleteStudentById(@PathVariable Long studentId){
+        return new ResponseEntity<>(studentService.deleteStudentById(studentId), HttpStatus.OK);
+    }
 }
