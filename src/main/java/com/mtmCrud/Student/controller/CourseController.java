@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/courses")
@@ -24,6 +25,17 @@ public class CourseController {
     @GetMapping
     public ResponseEntity<List<Course>> getAllCourse(){
         return new ResponseEntity<>(courseService.getAllCourse(),HttpStatus.OK);
+    }
+
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<Course> getCourseById(@PathVariable Long courseId){
+        Course course = courseService.getCourseById(courseId);
+        if(course == null){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else{
+            return new ResponseEntity<>(course, HttpStatus.OK);
+        }
     }
 
 }
