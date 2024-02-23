@@ -9,9 +9,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "course")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Setter
+@Getter
 public class Course {
 
     @Id
@@ -25,8 +24,8 @@ public class Course {
     @Column(name = "duration")
     float duration;
 
-    @ManyToMany(fetch =FetchType.EAGER,cascade = CascadeType.ALL,mappedBy ="course")
     @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy ="course")
     Set<Student> student = new HashSet<>();
 
 }
