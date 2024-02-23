@@ -27,12 +27,7 @@ public class CourseService {
     public Course getCourseById(Long courseId){
         try{
             Optional<Course> course = courseRepo.findById(courseId);
-            if(course.isPresent()){
-                return course.get();
-            }
-            else{
-                return null;
-            }
+            return course.orElse(null);
         }catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }

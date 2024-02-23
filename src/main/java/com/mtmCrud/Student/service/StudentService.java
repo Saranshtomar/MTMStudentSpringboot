@@ -57,4 +57,13 @@ public class StudentService {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    public Student getStudentById(Long studentId) {
+        try {
+            Optional<Student> student = studentRepo.findById(studentId);
+            return student.orElse(null);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
